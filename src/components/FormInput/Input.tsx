@@ -40,6 +40,8 @@ const StyledText = styled.p<InputProps>`
     props.disabled ? "#e4e3ea" : props.error ? "#a9150b" : "#080808"};
 `;
 
+const MAIN_PROJECT_NAME = "MainProject";
+
 const Input: FC<InputProps> = ({
   id,
   disabled,
@@ -52,7 +54,7 @@ const Input: FC<InputProps> = ({
 }) => {
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     GlobalObservable.dispatch({
-      action: "ToParent",
+      target: MAIN_PROJECT_NAME,
       payload: {
         data: e.target.value,
       },

@@ -12,6 +12,14 @@ export type Observer<T = any> = (
 
 export type Observers<T = any> = Observer<T>[];
 
+export interface Message {
+  target: string;
+  action: string;
+  payload: {
+    data: any;
+  };
+}
+
 declare global {
   interface Window {
     __shared__: {

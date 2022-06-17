@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
-import { GlobalObservable, Message } from "../..";
+import { GlobalObservable, LIBRARARY_NAME, Message } from "../..";
 
 import { ButtonProps } from "./Button.types";
 
@@ -47,9 +47,11 @@ const Button: FC<ButtonProps> = ({
   const [buttonText, setButtonText] = useState("");
   const handleNewMessage = (newMessage: Message | undefined) => {
     if (!newMessage) return;
-    const { action, payload } = newMessage;
-    if (action === "ToLibrary") {
-      setButtonText((currenButtonText) => (currenButtonText = payload.data));
+    const { target, payload } = newMessage;
+    if (target === LIBRARARY_NAME) {
+      setButtonText(
+        (currenButtonText) => (currenButtonText = payload.data as string)
+      );
     }
   };
 
