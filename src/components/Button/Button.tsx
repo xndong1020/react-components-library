@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { GlobalObservable, LIBRARARY_NAME, Message } from "../..";
 
@@ -45,7 +45,8 @@ const Button: FC<ButtonProps> = ({
   ...props
 }) => {
   const [buttonText, setButtonText] = useState("");
-  const handleNewMessage = (newMessage: Message | undefined) => {
+  
+  const handleNewMessage = useCallback((newMessage: Message | undefined) => {
     if (!newMessage) return;
     const { target, payload } = newMessage;
     if (target === LIBRARARY_NAME) {
@@ -53,7 +54,7 @@ const Button: FC<ButtonProps> = ({
         (currenButtonText) => (currenButtonText = payload.data as string)
       );
     }
-  };
+  }, []);
 
   useEffect(() => {
     GlobalObservable.subscribe((data) => handleNewMessage(data));
