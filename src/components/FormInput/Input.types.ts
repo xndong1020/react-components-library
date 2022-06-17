@@ -8,5 +8,4 @@ export interface InputProps {
   success?: boolean;
   disabled?: boolean;
   placeholder?: string;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
 }

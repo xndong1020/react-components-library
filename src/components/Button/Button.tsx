@@ -1,7 +1,6 @@
-import { globalObservable } from "../../index";
-
 import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
+import { GlobalObservable, Message } from "../..";
 
 import { ButtonProps } from "./Button.types";
 
@@ -45,16 +44,19 @@ const Button: FC<ButtonProps> = ({
   onClick,
   ...props
 }) => {
-  const handleNewMessage = (newMessage: string) => {
-    // setMessages((currentMessages) => currentMessages.concat(newMessage));
-    alert(`Child received new message from parent: ${newMessage}`);
+  const [buttonText, setButtonText] = useState("");
+  const handleNewMessage = (newMessage: Message) => {
+    const { action, payload } = newMessage;
+    if (action === "ToLibrary") {
+      setButtonText((currenButtonText) => (currenButtonText = payload.data));
+    }
   };
 
   useEffect(() => {
-    globalObservable.subscribe(handleNewMessage);
+    GlobalObservable.subscribe(handleNewMessage);
 
     return () => {
-      globalObservable.unsubscribe(handleNewMessage);
+      GlobalObservable.unsubscribe(handleNewMessage);
     };
   }, [handleNewMessage]);
 
@@ -67,7 +69,7 @@ const Button: FC<ButtonProps> = ({
       size={size}
       {...props}
     >
-      {text}
+      {buttonText}
     </StyledButton>
   );
 };

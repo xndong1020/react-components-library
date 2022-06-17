@@ -602,6 +602,13 @@ react-is@^16.7.0:
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-windowed-observable@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-windowed-observable/-/react-windowed-observable-1.0.0.tgz#ba2e5aa9122dd9a96e6415502a12251cbd3a0520"
+  integrity sha512-tivnaeJe01PgJB1oeuLk0l+BUkHfVjXaLS80jEQrLBjylKW+7t9B9W+r4QvqcUZpCIrCmX1F9jYOpIccoF+3TQ==
+  dependencies:
+    windowed-observable "^1.0.0"
+
 react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"

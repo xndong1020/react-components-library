@@ -1,7 +1,6 @@
-import { globalObservable } from "../../index";
-
-import React, { FC, Fragment, useEffect, useState } from "react";
+import React, { ChangeEvent, FC, Fragment, useEffect, useState } from "react";
 import styled from "styled-components";
+import { GlobalObservable, Message } from "../..";
 import { InputProps } from "./Input.types";
 
 const StyledInput = styled.input<InputProps>`
@@ -48,32 +47,17 @@ const Input: FC<InputProps> = ({
   message,
   error,
   success,
-  onChange,
   placeholder,
   ...props
 }) => {
-  const [messages, setMessages] = useState([]);
-
-  const handleNewMessage = (newMessage: string) => {
-    // setMessages((currentMessages) => currentMessages.concat(newMessage));
-    alert(`Child received new message from parent: ${newMessage}`);
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    GlobalObservable.dispatch({
+      action: "ToParent",
+      payload: {
+        data: e.target.value,
+      },
+    } as Message);
   };
-
-  useEffect(() => {
-    const testFn = () => {
-      globalObservable.subscribe(handleNewMessage);
-      setTimeout(() => {
-        console.log("inside Input");
-        globalObservable.publish(`Hahaha from child`);
-      }, 4000);
-    };
-
-    testFn();
-
-    return () => {
-      globalObservable.unsubscribe(handleNewMessage);
-    };
-  }, [handleNewMessage]);
 
   return (
     <Fragment>
