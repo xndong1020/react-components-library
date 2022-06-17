@@ -45,7 +45,8 @@ const Button: FC<ButtonProps> = ({
   ...props
 }) => {
   const [buttonText, setButtonText] = useState("");
-  const handleNewMessage = (newMessage: Message) => {
+  const handleNewMessage = (newMessage: Message | undefined) => {
+    if (!newMessage) return;
     const { action, payload } = newMessage;
     if (action === "ToLibrary") {
       setButtonText((currenButtonText) => (currenButtonText = payload.data));
@@ -53,7 +54,7 @@ const Button: FC<ButtonProps> = ({
   };
 
   useEffect(() => {
-    GlobalObservable.subscribe(handleNewMessage);
+    GlobalObservable.subscribe((data) => handleNewMessage(data));
 
     return () => {
       GlobalObservable.unsubscribe(handleNewMessage);

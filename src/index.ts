@@ -1,8 +1,6 @@
-import { Observable } from "windowed-observable";
 import Button from "./components/Button/Button";
 import Input from "./components/FormInput/Input";
-
-const observable = new Observable("messages");
+import { Observable } from "./observable";
 
 export interface Message {
   action: string;
@@ -10,5 +8,7 @@ export interface Message {
     data: string;
   };
 }
+
+const observable = new Observable<Message>("messages");
 
 export { Button, Input, observable as GlobalObservable };
