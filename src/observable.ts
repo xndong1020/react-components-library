@@ -1,4 +1,4 @@
-import { Events, Observer, Observers } from "./types/types";
+import { Events, Observer, Observers, Message } from "./types/types";
 
 export const EVENTS = "__events__";
 export const SHARED = "__shared__";
@@ -75,9 +75,12 @@ export class Observable<T = any> {
     const events = this.events;
     const lastEvent = this.getLastEvent();
 
+    // send the published event data to the observers
+    // events and lastEvent is for events hisotry retrieval
     this.observers.forEach((observer) => observer(data, { events, lastEvent }));
 
-    this.events.push(data);
+    // if not isOnce, then persist the events history
+    if (this._isMessage(data) && !data.isOnce) this.events.push(data);
   }
 
   dispatch = this.publish;
@@ -100,5 +103,10 @@ export class Observable<T = any> {
 
     this.events = [];
     this.observers = [];
+  }
+
+  // typeGuard
+  _isMessage(data: any): data is Message {
+    return "isOnce" in data;
   }
 }

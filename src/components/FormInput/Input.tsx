@@ -55,6 +55,7 @@ const Input: FC<InputProps> = ({
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     GlobalObservable.dispatch({
       target: MAIN_PROJECT_NAME,
+      isOnce: true,
       payload: {
         data: e.target.value,
       },

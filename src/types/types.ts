@@ -15,6 +15,7 @@ export type Observers<T = any> = Observer<T>[];
 export interface Message {
   target: string;
   action: string;
+  isOnce: boolean;
   payload: {
     data: any;
   };
