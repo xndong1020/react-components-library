@@ -56,6 +56,11 @@ export class Observable<T = any> {
     window[SHARED][OBSERVERS][this._namespace] = newObservers;
   }
 
+  // typeGuard
+  private isMessage(data: any): data is Message {
+    return "isOnce" in data;
+  }
+
   getEvents(): Events<T> {
     return this.events;
   }
@@ -80,7 +85,7 @@ export class Observable<T = any> {
     this.observers.forEach((observer) => observer(data, { events, lastEvent }));
 
     // if not isOnce, then persist the events history
-    if (this._isMessage(data) && !data.isOnce) this.events.push(data);
+    if (this.isMessage(data) && !data.isOnce) this.events.push(data);
   }
 
   dispatch = this.publish;
@@ -103,10 +108,5 @@ export class Observable<T = any> {
 
     this.events = [];
     this.observers = [];
-  }
-
-  // typeGuard
-  _isMessage(data: any): data is Message {
-    return "isOnce" in data;
   }
 }
